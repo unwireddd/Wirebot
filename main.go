@@ -167,5 +167,15 @@ func main() {
 
 	})
 
+	b.Handle("/tab", func(c tele.Context) error {
+
+		key := c.Args()
+		if len(key) > 1 {
+			return c.Send("You can only check one plate at once.")
+		}
+		return c.Send(tablice[key[0]])
+
+	})
+
 	b.Start()
 }
