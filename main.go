@@ -10,8 +10,6 @@ import (
 	"strconv"
 	"strings"
 
-	//"reflect"
-
 	"time"
 
 	"github.com/anaskhan96/soup"
@@ -60,15 +58,6 @@ func main() {
 			return c.Send("The correct syntax for this command is: /dlp [link to video you want to download]")
 		}
 
-		//isWebsite := arguments[0]
-		//u, err := url.Parse(isWebsite)
-		//if err != nil {
-		//	fmt.Println(u)
-		//	return c.Send("The url you have just provided doesnt seem to be a valid website.")
-		//} else {
-		//	fmt.Println("Valid URL")
-		//}
-
 		result, err := goutubedl.New(context.Background(), arguments[0], goutubedl.Options{})
 		if err != nil {
 			return c.Send("Something went wrong, try again later")
@@ -99,13 +88,8 @@ func main() {
 		timeUnit := arguments[1]
 		task := arguments[2:]
 
-		//test := "no"
 		fixedDuration := time.Duration(1) * time.Minute
 		var successMessage string
-
-		//if ok, _ := regexp.MatchString(`^\d+$`, duration); ok {
-		//	return c.Send(syntaxErr)
-		//}
 
 		if timeUnit != "m" && timeUnit != "h" {
 			return c.Send(syntaxErr)
@@ -125,9 +109,7 @@ func main() {
 
 		returnMessage := fmt.Sprintf("Hey, %v minutes passed, I came back to remind you about the task you wanted me to remind you about: %v", duration, task)
 		c.Send(successMessage)
-		//c.Send(b.GetC)
 		time.Sleep(fixedDuration)
-		//c.Send(successMessage)
 		return c.Send(returnMessage)
 
 	})
@@ -172,6 +154,9 @@ func main() {
 		key := c.Args()
 		if len(key) > 1 {
 			return c.Send("You can only check one plate at once.")
+		}
+		if len(key) == 0 {
+			return c.Send("The correct syntax for this command is: /tab [vehicle plates you want to check]")
 		}
 		return c.Send(tablice[key[0]])
 
